@@ -25,7 +25,7 @@ export class Main {
 
     private getLastRecordText():string {
         const date = new Date();
-        return `Wins: ${this.wins} | Loss: ${this.loss} | ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString("ru-RU")})`;
+        return `${this.wins}/${this.loss} | ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString("ru-RU")})`;
     }
 
     private getLocale():string {
