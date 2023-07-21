@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+
+}
+
+body {
+    background: black;
+    color: white;
+    font-family: sans-serif;
+    padding: 30px;
+    font-size: 18px;
+}
+
+label {
+    display: block;
+}
+
+input {
+    display: block;
+    font-size: inherit;
+}
+
+input[type=number] {
+    width: 80px;
+    padding: 3px 3px;
+}
