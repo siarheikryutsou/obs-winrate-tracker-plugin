@@ -1,10 +1,10 @@
 export class DOMElement {
-    constructor(tagName, htmlAttributes, innerText) {
+    constructor(tagName, attributes, innerText) {
         const el = this.el = document.createElement(tagName);
-        if (htmlAttributes) {
+        if (attributes) {
             let key;
-            for (key in htmlAttributes) {
-                const value = htmlAttributes[key];
+            for (key in attributes) {
+                const value = attributes[key];
                 if (value) {
                     el.setAttribute(key, value);
                 }

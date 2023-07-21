@@ -3,16 +3,17 @@ interface IDomElementAttributes {
     type?:string
     value?:string
     min?:string
+    class?:string
 }
 
 export class DOMElement {
     private readonly el:HTMLElement;
-    constructor(tagName:string, htmlAttributes?:IDomElementAttributes, innerText?:string) {
+    constructor(tagName:string, attributes?:IDomElementAttributes, innerText?:string) {
         const el:HTMLElement = this.el = document.createElement(tagName);
-        if(htmlAttributes) {
+        if(attributes) {
             let key: keyof IDomElementAttributes;
-            for(key in htmlAttributes) {
-                const value = htmlAttributes[key];
+            for(key in attributes) {
+                const value = attributes[key];
                 if(value) {
                     el.setAttribute(key, value);
                 }

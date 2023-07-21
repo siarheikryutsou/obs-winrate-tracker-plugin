@@ -1,3 +1,10 @@
+:root {
+    --border-radius: 4px;
+    --control-height: 26px;
+    --color-controll-bg: #3c404b;
+    --margin-row-v: 6px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,18 +21,76 @@ body {
     font-family: sans-serif;
     padding: 15px;
     font-size: 13px;
-}
-
-label {
-    display: block;
+    max-width: 230px;
 }
 
 input {
-    display: block;
     font-size: inherit;
+
 }
 
+
 input[type=number] {
+    padding: 0 3px;
     width: 80px;
-    padding: 3px 3px;
+    border-radius: var(--border-radius);
+    height: var(--control-height);
+    border: none;
+    color: inherit;
+    background: var(--color-controll-bg);
+    text-align: center;
+    outline: none;
 }
+
+input[type=number]:hover {
+    border: 2px solid #63666f;
+    padding: 0 1px;
+}
+
+input[type=number]:focus {
+    border: 2px solid #284cb8;
+    padding: 0 1px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+    background: transparent;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: inherit;
+    background: var(--color-controll-bg);
+    font-size: 2em;
+    border: none;
+    border-radius: var(--border-radius);
+    min-width: 32px;
+    height: var(--control-height);
+}
+
+button:hover {
+    background: #4f535e;
+}
+
+button:active {
+    background: #191b26;
+}
+
+.input-win-loss-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--margin-row-v);
+}
+
+.input-win-loss-wrapper .controls-wrapper {
+    display: flex;
+}
+
+.input-win-loss-wrapper .controls-wrapper :not(:last-child) {
+    margin-right: 8px;
+}
+

@@ -19,7 +19,7 @@ export class Main {
     }
     getLastRecordText() {
         const date = new Date();
-        return `Wins: ${this.wins} | Loss: ${this.loss} | ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString("ru-RU")})`;
+        return `${this.wins}/${this.loss} | ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString("ru-RU")})`;
     }
     getLocale() {
         return "ru-RU";
