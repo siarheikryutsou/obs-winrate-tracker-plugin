@@ -90,7 +90,11 @@ button:active {
     display: flex;
 }
 
+.input-win-loss-wrapper .controls-wrapper button span {
+    line-height: 0;
+    height: 4px;
+}
+
 .input-win-loss-wrapper .controls-wrapper :not(:last-child) {
     margin-right: 8px;
 }
-

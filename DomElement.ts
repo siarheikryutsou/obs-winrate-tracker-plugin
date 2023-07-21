@@ -1,3 +1,5 @@
+import {DomElementBase} from "./DomElementBase.js";
+
 interface IDomElementAttributes {
     id?:string
     type?:string
@@ -6,10 +8,10 @@ interface IDomElementAttributes {
     class?:string
 }
 
-export class DOMElement {
-    private readonly el:HTMLElement;
+export class DOMElement extends DomElementBase {
     constructor(tagName:string, attributes?:IDomElementAttributes, innerText?:string) {
-        const el:HTMLElement = this.el = document.createElement(tagName);
+        super(document.createElement(tagName));
+        const el:HTMLElement = this.el;
         if(attributes) {
             let key: keyof IDomElementAttributes;
             for(key in attributes) {
@@ -23,9 +25,5 @@ export class DOMElement {
         if(innerText) {
             el.innerText = innerText;
         }
-    }
-
-    getEl() {
-        return this.el;
     }
 }

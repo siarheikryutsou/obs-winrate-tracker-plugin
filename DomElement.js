@@ -1,6 +1,8 @@
-export class DOMElement {
+import { DomElementBase } from "./DomElementBase.js";
+export class DOMElement extends DomElementBase {
     constructor(tagName, attributes, innerText) {
-        const el = this.el = document.createElement(tagName);
+        super(document.createElement(tagName));
+        const el = this.el;
         if (attributes) {
             let key;
             for (key in attributes) {
@@ -13,9 +15,6 @@ export class DOMElement {
         if (innerText) {
             el.innerText = innerText;
         }
-    }
-    getEl() {
-        return this.el;
     }
 }
 //# sourceMappingURL=DomElement.js.map
