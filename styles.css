@@ -9,11 +9,11 @@ html {
 }
 
 body {
-    background: black;
+    background: #2b2e38;
     color: white;
     font-family: sans-serif;
-    padding: 30px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 14px;
 }
 
 label {
