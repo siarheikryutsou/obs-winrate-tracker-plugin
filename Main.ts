@@ -10,22 +10,25 @@ export class Main {
     private locale:string = this.getLocale();
 
     constructor() {
-
-        const filePath = window.localStorage.getItem("filePath");
-
         if(window.location.hash === "#source") {
             this.showSources();
         } else {
             this.showControls();
         }
-
-        console.log(filePath);
     }
 
     private showSources():void {
         this.body.classList.add("source");
         const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, "Hello!").getEl() as HTMLParagraphElement;
         this.body.append(elSourceWrapper);
+
+        setInterval(() => {
+            const record:string | null = window.localStorage.getItem("record");
+            if(record) {
+                elSourceWrapper.innerText = record;
+                console.log("record:", record);
+            }
+        }, 1000);
     }
 
     private showControls():void {

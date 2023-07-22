@@ -7,19 +7,24 @@ export class Main {
         this.wins = 0;
         this.loss = 0;
         this.locale = this.getLocale();
-        const filePath = window.localStorage.getItem("filePath");
         if (window.location.hash === "#source") {
             this.showSources();
         }
         else {
             this.showControls();
         }
-        console.log(filePath);
     }
     showSources() {
         this.body.classList.add("source");
         const elSourceWrapper = new DOMElement("p", { id: "source" }, "Hello!").getEl();
         this.body.append(elSourceWrapper);
+        setInterval(() => {
+            const record = window.localStorage.getItem("record");
+            if (record) {
+                elSourceWrapper.innerText = record;
+                console.log("record:", record);
+            }
+        }, 1000);
     }
     showControls() {
         const winRateModel = new WinRateModel({
