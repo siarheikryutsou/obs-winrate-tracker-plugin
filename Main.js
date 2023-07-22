@@ -23,15 +23,21 @@ export class Main {
             elSourceWrapper.innerText = this.getSourcesText();
         }, 1000);
     }
-    getSourcesText() {
+    getSourcesText(format) {
         return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+    }
+    getShortLastRecordText() {
+        if (this.lastRecord) {
+            return this.lastRecord.replace("Wins", "W:").replace("Loss", "L").replace("WinRate", "WR");
+        }
+        return "";
     }
     showControls() {
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel = new DOMElement("label", { id: "last-record-label" }, "Last Record:").getEl();
         const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
         const elBtnReset = new DOMElement("button", undefined, "Reset All Records").getEl();
-        this.elLastRecord = new DOMElement("p", undefined, this.lastRecord).getEl();
+        this.elLastRecord = new DOMElement("p", undefined, this.getShortLastRecordText()).getEl();
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
@@ -55,7 +61,7 @@ export class Main {
         (_a = this.elInputWins) === null || _a === void 0 ? void 0 : _a.setValue(this.wins);
         (_b = this.elInputLoss) === null || _b === void 0 ? void 0 : _b.setValue(this.loss);
         if (this.elLastRecord) {
-            this.elLastRecord.innerText = this.lastRecord;
+            this.elLastRecord.innerText = this.getShortLastRecordText();
         }
     }
     saveRecords() {

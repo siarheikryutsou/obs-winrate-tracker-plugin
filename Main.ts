@@ -34,8 +34,15 @@ export class Main {
         }, 1000);
     }
 
-    private getSourcesText():string {
+    private getSourcesText(format?:string):string {
         return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+    }
+
+    private getShortLastRecordText():string {
+        if(this.lastRecord) {
+            return this.lastRecord.replace("Wins", "W:").replace("Loss", "L").replace("WinRate", "WR");
+        }
+        return "";
     }
 
     private showControls():void {
@@ -43,7 +50,7 @@ export class Main {
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
         const elBtnSave:HTMLButtonElement = new DOMElement("button", undefined, "Save").getEl() as HTMLButtonElement;
         const elBtnReset:HTMLButtonElement = new DOMElement("button", undefined, "Reset All Records").getEl() as HTMLButtonElement;
-        this.elLastRecord = new DOMElement("p", undefined, this.lastRecord).getEl() as HTMLParagraphElement;
+        this.elLastRecord = new DOMElement("p", undefined, this.getShortLastRecordText()).getEl() as HTMLParagraphElement;
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl() as HTMLLabelElement;
@@ -69,7 +76,7 @@ export class Main {
         this.elInputWins?.setValue(this.wins);
         this.elInputLoss?.setValue(this.loss);
         if(this.elLastRecord) {
-            this.elLastRecord.innerText = this.lastRecord;
+            this.elLastRecord.innerText = this.getShortLastRecordText();
         }
     }
 
