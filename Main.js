@@ -28,7 +28,7 @@ export class Main {
     }
     getShortLastRecordText() {
         if (this.lastRecord) {
-            return this.lastRecord.replace("Wins", "W:").replace("Loss", "L").replace("WinRate", "WR");
+            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
         }
         return "";
     }
