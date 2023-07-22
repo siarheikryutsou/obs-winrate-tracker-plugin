@@ -30,7 +30,10 @@ export class Main {
 
         setInterval(() => {
             this.readValues();
-            elSourceWrapper.innerText = this.getSourcesText();
+            const currentValues:string = this.getSourcesText();
+            if(elSourceWrapper.innerText !== currentValues) {
+                elSourceWrapper.innerText = currentValues;
+            }
         }, 1000);
     }
 

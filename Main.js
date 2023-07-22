@@ -20,7 +20,10 @@ export class Main {
         this.body.append(elSourceWrapper);
         setInterval(() => {
             this.readValues();
-            elSourceWrapper.innerText = this.getSourcesText();
+            const currentValues = this.getSourcesText();
+            if (elSourceWrapper.innerText !== currentValues) {
+                elSourceWrapper.innerText = currentValues;
+            }
         }, 1000);
     }
     getSourcesText(format) {
