@@ -1,12 +1,12 @@
 import { DOMElement } from "./DomElement.js";
 import { InputWinLoss } from "./InputWinLoss.js";
-import { WinRateModel } from "./WinRateModel.js";
 export class Main {
     constructor() {
         this.body = document.body;
         this.wins = 0;
         this.loss = 0;
         this.locale = this.getLocale();
+        this.setValues();
         if (window.location.hash === "#source") {
             this.showSources();
         }
@@ -15,11 +15,12 @@ export class Main {
         }
     }
     showSources() {
+        const text = `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+        const elSourceWrapper = new DOMElement("p", { id: "source" }, text).getEl();
         this.body.classList.add("source");
-        const elSourceWrapper = new DOMElement("p", { id: "source" }, "Hello!").getEl();
         this.body.append(elSourceWrapper);
         setInterval(() => {
-            const record = window.localStorage.getItem("record");
+            const record = this.getLSValue("record");
             if (record) {
                 elSourceWrapper.innerText = record;
                 console.log("record:", record);
@@ -27,22 +28,15 @@ export class Main {
         }, 1000);
     }
     showControls() {
-        const winRateModel = new WinRateModel({
-            wins: 0,
-            loss: 0,
-            winRate: 0
-        });
         const elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         const elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
-        const elLabelWinRate = new DOMElement("label", undefined, "Winrate: ").getEl();
+        const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
+        const elLastLabel = new DOMElement("label", undefined, "Last Record:").getEl();
         const elLastRecord = new DOMElement("p", undefined, this.getLastRecordText()).getEl();
-        this.body.append(elInputWins.getEl(), elInputLoss.getEl(), elLabelWinRate, elValueWinRate, elLastRecord);
-        /*winRateModel.addEventListener("CHANGE:winRate", (event:Event):void => {
-            console.log("changed:", winRateModel.get("winRate"));
-        });
-
-        winRateModel.set("winRate", 1);*/
+        const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
+        const elBtnReset = new DOMElement("button", undefined, "Reset All Records").getEl();
+        this.body.append(elInputWins.getEl(), elInputLoss.getEl(), elLabelWinRate, elValueWinRate, elLastLabel, elLastRecord, elBtnSave, elBtnReset);
     }
     getWinRateValue() {
         const result = this.wins ? (this.wins / (this.wins + this.loss) * 100) : 0;
@@ -54,6 +48,18 @@ export class Main {
     }
     getLocale() {
         return "ru-RU";
+    }
+    setValues() {
+        const lsWins = this.getLSValue("wins");
+        const lsLoss = this.getLSValue("wins");
+        this.wins = lsWins ? parseInt(lsWins) : 0;
+        this.wins = lsLoss ? parseInt(lsLoss) : 0;
+    }
+    getLSValue(key) {
+        return window.localStorage.getItem(key);
+    }
+    setLSValue(key, value) {
+        window.localStorage.setItem(key, value);
     }
 }
 new Main();
