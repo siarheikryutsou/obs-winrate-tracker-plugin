@@ -9,6 +9,7 @@ export class Main {
     private locale:string = this.getLocale();
     private elInputWins:InputWinLoss | undefined;
     private elInputLoss:InputWinLoss | undefined;
+    private elValueWinRate:HTMLLabelElement | undefined;
 
     constructor() {
         this.readValues();
@@ -21,35 +22,36 @@ export class Main {
     }
 
     private showSources():void {
-        const text = `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
-        const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, text).getEl() as HTMLParagraphElement;
+        const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, this.getSourcesText()).getEl() as HTMLParagraphElement;
         this.body.classList.add("source");
         this.body.append(elSourceWrapper);
 
         setInterval(() => {
-            const record = this.getLSValue("record");
-            if(record) {
-                elSourceWrapper.innerText = record;
-                console.log("record:", record);
-            }
+            this.readValues();
+            elSourceWrapper.innerText = this.getSourcesText();
         }, 1000);
+    }
+
+    private getSourcesText():string {
+        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
     }
 
     private showControls():void {
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
-        const elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
+        this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl() as HTMLLabelElement;
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
         const elLastRecord = new DOMElement("p", undefined, this.getLastRecordText()).getEl();
         const elBtnSave:HTMLButtonElement = new DOMElement("button", undefined, "Save").getEl() as HTMLButtonElement;
         const elBtnReset:HTMLButtonElement = new DOMElement("button", undefined, "Reset All Records").getEl() as HTMLButtonElement;
 
         elBtnReset.addEventListener("click", ():void => this.resetAllRecords());
+        elBtnSave.addEventListener("click", ():void => this.saveRecords());
         this.elInputWins.addEventListener("change", ():void => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", ():void => this.onInputChange(this.elInputLoss, "loss"));
 
-        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, elValueWinRate, elLastLabel, elLastRecord, elBtnSave, elBtnReset);
+        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, elLastRecord, elBtnSave, elBtnReset);
     }
 
 
@@ -60,10 +62,15 @@ export class Main {
     private setRecords(wins:number, loss:number):void {
         this.wins = wins;
         this.loss = loss;
-        this.setLSValue("wins", wins.toString());
-        this.setLSValue("loss", loss.toString());
+        this.saveRecords();
         this.elInputWins?.setValue(wins);
         this.elInputLoss?.setValue(loss);
+    }
+
+
+    private saveRecords():void {
+        this.setLSValue("wins", this.wins.toString());
+        this.setLSValue("loss", this.loss.toString());
     }
 
 
@@ -74,7 +81,7 @@ export class Main {
 
     private getLastRecordText():string {
         const date = new Date();
-        return `Wins: ${this.wins} | Loss: ${this.loss} \n ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString("ru-RU")})`;
+        return `Wins: ${this.wins} | Loss: ${this.loss} \n ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString(this.locale)})`;
     }
 
     private getLocale():string {
@@ -83,9 +90,9 @@ export class Main {
 
     private readValues():void {
         const lsWins = this.getLSValue("wins");
-        const lsLoss = this.getLSValue("wins");
+        const lsLoss = this.getLSValue("loss");
         this.wins = lsWins ? parseInt(lsWins) : 0;
-        this.wins = lsLoss ? parseInt(lsLoss) : 0;
+        this.loss = lsLoss ? parseInt(lsLoss) : 0;
     }
 
     private getLSValue(key:string):string | null {
@@ -105,7 +112,9 @@ export class Main {
             this.loss = newValue;
         }
 
-        console.log(this.wins + "/" + this.loss);
+        if(this.elValueWinRate) {
+            this.elValueWinRate.innerText = this.getWinRateValue();
+        }
     }
 }
 
