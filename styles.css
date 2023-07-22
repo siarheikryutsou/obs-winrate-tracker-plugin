@@ -24,6 +24,11 @@ body {
     max-width: 230px;
 }
 
+body.source {
+    background: transparent;
+    color: black;
+}
+
 input {
     font-size: inherit;
 }

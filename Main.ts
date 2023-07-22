@@ -13,9 +13,8 @@ export class Main {
 
         const filePath = window.localStorage.getItem("filePath");
 
-        if(!filePath) {
-            this.showCreateFile();
-            //this.showControls();
+        if(window.location.hash === "#source") {
+            this.showSources();
         } else {
             this.showControls();
         }
@@ -23,23 +22,10 @@ export class Main {
         console.log(filePath);
     }
 
-    private async createFile():Promise<void> {
-        const filename = "obs-win-rate";
-        const fileExt = ".txt";
-        const options = {
-            suggestedName: filename,
-            types: [{
-                description: "Animator file",
-                accept: {'text/plain': [fileExt]},
-            }]
-        }
-        const saveFile = await window.showSaveFilePicker(options);
-    }
-
-    private showCreateFile():void {
-        const button:HTMLButtonElement = new DOMElement("button", undefined, "Create file").getEl() as HTMLButtonElement;
-        button.addEventListener("click", async ():Promise<void> => await this.createFile());
-        this.body.append(button);
+    private showSources():void {
+        this.body.classList.add("source");
+        const elSpan:HTMLSpanElement = new DOMElement("span", undefined, "Hello!").getEl();
+        this.body.append(elSpan);
     }
 
     private showControls():void {
