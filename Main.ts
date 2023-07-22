@@ -97,7 +97,7 @@ export class Main {
     }
 
     private getLocale():string {
-        return "ru-RU";
+        return navigator.language.substring(0, 2).toLowerCase();
     }
 
     private readValues():void {

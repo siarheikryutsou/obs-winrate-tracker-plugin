@@ -76,7 +76,7 @@ export class Main {
         return `${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString(this.locale)})`;
     }
     getLocale() {
-        return "ru-RU";
+        return navigator.language.substring(0, 2).toLowerCase();
     }
     readValues() {
         const lsWins = this.getLSValue("wins");
