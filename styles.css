@@ -26,7 +26,6 @@ body {
 
 input {
     font-size: inherit;
-
 }
 
 
@@ -48,6 +47,10 @@ input[type=number]:hover {
 }
 
 input[type=number]:focus {
+    background: #191b26;
+}
+
+input[type=number]:focus {
     border: 2px solid #284cb8;
     padding: 0 1px;
 }
@@ -64,11 +67,11 @@ button {
     align-items: center;
     color: inherit;
     background: var(--color-controll-bg);
-    font-size: 2em;
     border: none;
     border-radius: var(--border-radius);
     min-width: 32px;
-    height: var(--control-height);
+    padding: 11px 20px;
+    width: 100%;
 }
 
 button:hover {
@@ -88,6 +91,13 @@ button:active {
 
 .input-win-loss-wrapper .controls-wrapper {
     display: flex;
+}
+
+.input-win-loss-wrapper .controls-wrapper button {
+    font-size: 2em;
+    height: var(--control-height);
+    padding: 0;
+    width: auto;
 }
 
 .input-win-loss-wrapper .controls-wrapper button span {

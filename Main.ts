@@ -10,6 +10,39 @@ export class Main {
     private locale:string = this.getLocale();
 
     constructor() {
+
+        const filePath = window.localStorage.getItem("filePath");
+
+        if(!filePath) {
+            this.showCreateFile();
+            //this.showControls();
+        } else {
+            this.showControls();
+        }
+
+        console.log(filePath);
+    }
+
+    private async createFile():Promise<void> {
+        const filename = "obs-win-rate";
+        const fileExt = ".txt";
+        const options = {
+            suggestedName: filename,
+            types: [{
+                description: "Animator file",
+                accept: {'text/plain': [fileExt]},
+            }]
+        }
+        const saveFile = await window.showSaveFilePicker(options);
+    }
+
+    private showCreateFile():void {
+        const button:HTMLButtonElement = new DOMElement("button", undefined, "Create file").getEl() as HTMLButtonElement;
+        button.addEventListener("click", async ():Promise<void> => await this.createFile());
+        this.body.append(button);
+    }
+
+    private showControls():void {
         const winRateModel:WinRateModel = new WinRateModel({
             wins: 0,
             loss: 0,
@@ -18,7 +51,7 @@ export class Main {
 
         const elInputWins:InputWinLoss = new InputWinLoss("input-wins", "Wins", this.wins);
         const elInputLoss:InputWinLoss = new InputWinLoss("input-loss", "Loss", this.loss);
-        const elLabelWinRate = new DOMElement("label", undefined, "Winrate:").getEl();
+        const elLabelWinRate = new DOMElement("label", undefined, "Winrate: ").getEl();
         const elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
         const elLastRecord = new DOMElement("p", undefined, this.getLastRecordText()).getEl();
 
