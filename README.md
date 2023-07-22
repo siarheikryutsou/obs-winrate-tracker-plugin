@@ -2,7 +2,7 @@
 ## Installation
 - Launch OBS
 - In the top menu press "Docks > Custom Browser Docks..."
-- In popup fill Dock Name field (Any). For Example "Win Rate"
+- In popup fill Dock Name field. For Example "Win Rate" but you can set any name
 - Paste this url to URL field: https://siarheikryutsou.github.io/obs-winrate-tracker-plugin/
 - Press "Apply"
 - In the Sources panel press "Add Source" button and select "Browser"
