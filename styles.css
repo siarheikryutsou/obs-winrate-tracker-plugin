@@ -26,7 +26,18 @@ body {
 
 body.source {
     background: transparent;
-    color: black;
+    color: white;
+    font-size: 48px;
+    width: 100%;
+    max-width: none;
+}
+
+#source {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color:white;
+    font-size: 48px;
+    width: 100%;
+    text-align: center;
 }
 
 input {

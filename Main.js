@@ -18,8 +18,8 @@ export class Main {
     }
     showSources() {
         this.body.classList.add("source");
-        const elSpan = new DOMElement("span", undefined, "Hello!").getEl();
-        this.body.append(elSpan);
+        const elSourceWrapper = new DOMElement("p", { id: "source" }, "Hello!").getEl();
+        this.body.append(elSourceWrapper);
     }
     showControls() {
         const winRateModel = new WinRateModel({

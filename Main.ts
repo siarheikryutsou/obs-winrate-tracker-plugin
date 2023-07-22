@@ -24,8 +24,8 @@ export class Main {
 
     private showSources():void {
         this.body.classList.add("source");
-        const elSpan:HTMLSpanElement = new DOMElement("span", undefined, "Hello!").getEl();
-        this.body.append(elSpan);
+        const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, "Hello!").getEl() as HTMLParagraphElement;
+        this.body.append(elSourceWrapper);
     }
 
     private showControls():void {
