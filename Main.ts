@@ -6,10 +6,12 @@ export class Main {
     private body:HTMLElement = document.body;
     private wins:number = 0;
     private loss:number = 0;
+    private lastRecord:string | undefined;
     private locale:string = this.getLocale();
     private elInputWins:InputWinLoss | undefined;
     private elInputLoss:InputWinLoss | undefined;
     private elValueWinRate:HTMLLabelElement | undefined;
+    private elLastRecord:HTMLParagraphElement | undefined;
 
     constructor() {
         this.readValues();
@@ -37,40 +39,46 @@ export class Main {
     }
 
     private showControls():void {
-        this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
-        this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
-        this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl() as HTMLLabelElement;
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
-        const elLastRecord = new DOMElement("p", undefined, this.getLastRecordText()).getEl();
         const elBtnSave:HTMLButtonElement = new DOMElement("button", undefined, "Save").getEl() as HTMLButtonElement;
         const elBtnReset:HTMLButtonElement = new DOMElement("button", undefined, "Reset All Records").getEl() as HTMLButtonElement;
+        this.elLastRecord = new DOMElement("p", undefined, this.lastRecord).getEl() as HTMLParagraphElement;
+        this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
+        this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
+        this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl() as HTMLLabelElement;
 
         elBtnReset.addEventListener("click", ():void => this.resetAllRecords());
         elBtnSave.addEventListener("click", ():void => this.saveRecords());
         this.elInputWins.addEventListener("change", ():void => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", ():void => this.onInputChange(this.elInputLoss, "loss"));
 
-        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, elLastRecord, elBtnSave, elBtnReset);
+        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset);
     }
 
 
     private resetAllRecords():void {
         this.setRecords(0, 0);
+        this.saveRecords();
     }
 
-    private setRecords(wins:number, loss:number):void {
-        this.wins = wins;
-        this.loss = loss;
-        this.saveRecords();
-        this.elInputWins?.setValue(wins);
-        this.elInputLoss?.setValue(loss);
+    private setRecords(wins?:number, loss?:number):void {
+        if(wins !== undefined) this.wins = wins;
+        if(loss !== undefined) this.loss = loss;
+        this.lastRecord = this.getLastRecordText();
+        this.elInputWins?.setValue(this.wins);
+        this.elInputLoss?.setValue(this.loss);
+        if(this.elLastRecord) {
+            this.elLastRecord.innerText = this.lastRecord;
+        }
     }
 
 
     private saveRecords():void {
         this.setLSValue("wins", this.wins.toString());
         this.setLSValue("loss", this.loss.toString());
+        this.setLSValue("lastRecord", this.getLastRecordText());
+        this.setRecords();
     }
 
 
@@ -80,8 +88,12 @@ export class Main {
     }
 
     private getLastRecordText():string {
+        return `${this.getSourcesText()} \n ${this.getDateText()}`;
+    }
+
+    private getDateText():string {
         const date = new Date();
-        return `Wins: ${this.wins} | Loss: ${this.loss} \n ${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString(this.locale)})`;
+        return `${date.toLocaleDateString(this.locale)} (${date.toLocaleTimeString(this.locale)})`
     }
 
     private getLocale():string {
@@ -91,8 +103,10 @@ export class Main {
     private readValues():void {
         const lsWins = this.getLSValue("wins");
         const lsLoss = this.getLSValue("loss");
+        const lsLastRecord = this.getLSValue("lastRecord");
         this.wins = lsWins ? parseInt(lsWins) : 0;
         this.loss = lsLoss ? parseInt(lsLoss) : 0;
+        this.lastRecord = lsLastRecord ? lsLastRecord : this.getLastRecordText()
     }
 
     private getLSValue(key:string):string | null {
