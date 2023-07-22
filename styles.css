@@ -124,3 +124,12 @@ button:active {
 .input-win-loss-wrapper .controls-wrapper :not(:last-child) {
     margin-right: 8px;
 }
+
+#last-record-label {
+    display: block;
+    margin: var(--margin-row-v) 0;
+}
+
+body > button {
+    margin-top: var(--margin-row-v);
+}

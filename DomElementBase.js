@@ -1,5 +1,6 @@
-export class DomElementBase {
+export class DomElementBase extends EventTarget {
     constructor(el) {
+        super();
         this.el = el;
     }
     getEl() {

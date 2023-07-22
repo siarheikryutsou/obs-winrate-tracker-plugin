@@ -28,11 +28,26 @@ export class InputWinLoss extends DomElementBase {
         this.elBtnMinus.addEventListener("click", () => this.changeValue(-1));
         this.elBtnMinus.append(this.elBtnMinusContentsWrapper);
         this.elControlsWrapper.append(this.elInput, this.elBtnPlus, this.elBtnMinus);
+        this.elInput.addEventListener("change", (event) => this.dispatchChange());
         this.el.append(this.elLabel, this.elControlsWrapper);
     }
 
     private changeValue(value:number):void {
         const currentValue:number = parseInt(this.elInput.value);
         this.elInput.value = (Math.max(currentValue + value, 0)).toString();
+        this.dispatchChange();
+    }
+
+    private dispatchChange():void {
+        super.dispatchEvent(new Event("change"));
+    }
+
+    getValue():number {
+        return parseInt(this.elInput.value);
+    }
+
+
+    setValue(value:number) {
+        this.elInput.value = value.toString();
     }
 }
