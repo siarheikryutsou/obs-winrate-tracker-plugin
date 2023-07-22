@@ -21,7 +21,7 @@ body {
     font-family: sans-serif;
     padding: 15px;
     font-size: 13px;
-    max-width: 230px;
+    max-width: 250px;
 }
 
 body.source {
@@ -33,11 +33,13 @@ body.source {
 }
 
 #source {
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    /*text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
     color:white;
     font-size: 48px;
     width: 100%;
     text-align: center;
+    -webkit-text-stroke: 2px black;
+    font-weight: 600;
 }
 
 input {
