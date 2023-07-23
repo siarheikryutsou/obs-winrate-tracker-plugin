@@ -86,6 +86,7 @@ export class Main {
         const elP:HTMLParagraphElement = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl() as HTMLParagraphElement;
         this.body.classList.add("settings");
         this.body.append(elH1, elP);
+        document.title = "Settings";
     }
 
 
