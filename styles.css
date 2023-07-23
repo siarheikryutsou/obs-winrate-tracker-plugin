@@ -38,6 +38,10 @@ body.settings {
     max-width: none;
 }
 
+body.settings h1 {
+    margin-bottom: var(--margin-row-v);
+}
+
 #source {
     /*text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
     color:white;
