@@ -7,11 +7,16 @@ export class Main {
         this.loss = 0;
         this.locale = this.getLocale();
         this.readValues();
-        if (window.location.hash === "#source") {
+        const hash = window.location.hash;
+        console.log("hash:", hash);
+        if (hash === "#source") {
             this.showSources();
         }
+        else if (hash === "#settings") {
+            this.showSettings();
+        }
         else {
-            this.showControls();
+            this.showDock();
         }
     }
     showSources() {
@@ -26,20 +31,13 @@ export class Main {
             }
         }, 1000);
     }
-    getSourcesText(format) {
-        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
-    }
-    getShortLastRecordText() {
-        if (this.lastRecord) {
-            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
-        }
-        return "";
-    }
-    showControls() {
+    showDock() {
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel = new DOMElement("label", { id: "last-record-label" }, "Last Record:").getEl();
         const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
         const elBtnReset = new DOMElement("button", undefined, "Reset All Records").getEl();
+        const elFooter = new DOMElement("div", { id: "footer" }).getEl();
+        const elSettingsBtn = new DOMElement("button", { class: "small icon" }).getEl();
         this.elLastRecord = new DOMElement("p", undefined, this.getShortLastRecordText()).getEl();
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
@@ -48,7 +46,25 @@ export class Main {
         elBtnSave.addEventListener("click", () => this.saveRecords());
         this.elInputWins.addEventListener("change", () => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", () => this.onInputChange(this.elInputLoss, "loss"));
-        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset);
+        elSettingsBtn.addEventListener("click", () => this.openSettings());
+        elSettingsBtn.append(new DOMElement("img", { src: "./settings_icon.svg" }).getEl());
+        elFooter.append(elSettingsBtn);
+        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
+    }
+    showSettings() {
+        const elH1 = new DOMElement("h1", undefined, "Coming soon...").getEl();
+        const elP = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl();
+        this.body.classList.add("settings");
+        this.body.append(elH1, elP);
+    }
+    getSourcesText(format) {
+        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+    }
+    getShortLastRecordText() {
+        if (this.lastRecord) {
+            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
+        }
+        return "";
     }
     resetAllRecords() {
         this.setRecords(0, 0);
@@ -118,6 +134,9 @@ export class Main {
         if (this.elValueWinRate) {
             this.elValueWinRate.innerText = this.getWinRateValue();
         }
+    }
+    openSettings() {
+        window.open(`${window.location.href}#settings`, "_blank", "width=640,height=480");
     }
 }
 new Main();

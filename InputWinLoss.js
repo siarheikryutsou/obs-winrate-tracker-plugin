@@ -10,8 +10,8 @@ export class InputWinLoss extends DomElementBase {
             value: value.toString(),
             min: "0"
         }).getEl();
-        this.elBtnPlus = new DOMElement("button", { type: "button" }, "+").getEl();
-        this.elBtnMinus = new DOMElement("button", { type: "button" }).getEl();
+        this.elBtnPlus = new DOMElement("button", { type: "button", class: "small" }, "+").getEl();
+        this.elBtnMinus = new DOMElement("button", { type: "button", class: "small" }).getEl();
         this.elBtnMinusContentsWrapper = new DOMElement("span", undefined, "-").getEl();
         this.el.addEventListener("focus", () => this.elInput.select());
         this.elBtnPlus.addEventListener("click", () => this.changeValue(1));

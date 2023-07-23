@@ -16,10 +16,15 @@ export class Main {
     constructor() {
         this.readValues();
 
-        if(window.location.hash === "#source") {
+        const hash:string = window.location.hash;
+        console.log("hash:", hash)
+
+        if(hash === "#source") {
             this.showSources();
+        } else if(hash === "#settings") {
+            this.showSettings();
         } else {
-            this.showControls();
+            this.showDock();
         }
     }
 
@@ -37,22 +42,14 @@ export class Main {
         }, 1000);
     }
 
-    private getSourcesText(format?:string):string {
-        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
-    }
 
-    private getShortLastRecordText():string {
-        if(this.lastRecord) {
-            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
-        }
-        return "";
-    }
-
-    private showControls():void {
+    private showDock():void {
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
         const elBtnSave:HTMLButtonElement = new DOMElement("button", undefined, "Save").getEl() as HTMLButtonElement;
         const elBtnReset:HTMLButtonElement = new DOMElement("button", undefined, "Reset All Records").getEl() as HTMLButtonElement;
+        const elFooter:HTMLDivElement = new DOMElement("div", {id: "footer"}).getEl() as HTMLDivElement;
+        const elSettingsBtn:HTMLButtonElement = new DOMElement("button", {class: "small icon"}).getEl() as HTMLButtonElement;
         this.elLastRecord = new DOMElement("p", undefined, this.getShortLastRecordText()).getEl() as HTMLParagraphElement;
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
@@ -63,7 +60,44 @@ export class Main {
         this.elInputWins.addEventListener("change", ():void => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", ():void => this.onInputChange(this.elInputLoss, "loss"));
 
-        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset);
+        elSettingsBtn.addEventListener("click", ():void => this.openSettings())
+
+        elSettingsBtn.append(
+            new DOMElement("img", {src: "./settings_icon.svg"}).getEl() as HTMLImageElement
+        )
+        elFooter.append(elSettingsBtn);
+
+        this.body.append(
+            this.elInputWins.getEl(),
+            this.elInputLoss.getEl(),
+            elLabelWinRate,
+            this.elValueWinRate,
+            elLastLabel,
+            this.elLastRecord,
+            elBtnSave,
+            elBtnReset,
+            elFooter
+        );
+    }
+
+
+    private showSettings():void {
+        const elH1:HTMLHeadingElement = new DOMElement("h1", undefined, "Coming soon...").getEl() as HTMLHeadingElement;
+        const elP:HTMLParagraphElement = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl() as HTMLParagraphElement;
+        this.body.classList.add("settings");
+        this.body.append(elH1, elP);
+    }
+
+
+    private getSourcesText(format?:string):string {
+        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+    }
+
+    private getShortLastRecordText():string {
+        if(this.lastRecord) {
+            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
+        }
+        return "";
     }
 
 
@@ -145,6 +179,10 @@ export class Main {
         if(this.elValueWinRate) {
             this.elValueWinRate.innerText = this.getWinRateValue();
         }
+    }
+
+    private openSettings():void {
+        window.open(`${window.location.href}#settings`, "_blank", "width=640,height=480");
     }
 }
 

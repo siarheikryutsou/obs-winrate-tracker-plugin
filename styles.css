@@ -3,6 +3,7 @@
     --control-height: 26px;
     --color-controll-bg: #3c404b;
     --margin-row-v: 6px;
+    --color-bg: #2b2e38;
 }
 
 * {
@@ -16,7 +17,7 @@ html {
 }
 
 body {
-    background: #2b2e38;
+    background: var(--color-bg);
     color: white;
     font-family: sans-serif;
     padding: 15px;
@@ -29,6 +30,11 @@ body.source {
     color: white;
     font-size: 48px;
     width: 100%;
+    max-width: none;
+}
+
+body.settings {
+    font-size: 16px;
     max-width: none;
 }
 
@@ -111,11 +117,16 @@ button:active {
     display: flex;
 }
 
-.input-win-loss-wrapper .controls-wrapper button {
+button.small {
     font-size: 2em;
     height: var(--control-height);
     padding: 0;
     width: auto;
+}
+
+button.small.icon img {
+    max-width: 14px;
+    max-height: 14px;
 }
 
 .input-win-loss-wrapper .controls-wrapper button span {
@@ -134,4 +145,12 @@ button:active {
 
 body > button {
     margin-top: var(--margin-row-v);
+}
+
+#footer {
+    margin-top: var(--margin-row-v);
+    position: sticky;
+    bottom: 0;
+    background: var(--color-bg);
+    padding: var(--margin-row-v) 0;
 }
