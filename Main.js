@@ -66,6 +66,7 @@ export class Main {
         if (this.elLastRecord) {
             this.elLastRecord.innerText = this.getShortLastRecordText();
         }
+        this.setWinRateValue();
     }
     saveRecords() {
         this.setLSValue("wins", this.wins.toString());
@@ -111,6 +112,9 @@ export class Main {
         else {
             this.loss = newValue;
         }
+        this.setWinRateValue();
+    }
+    setWinRateValue() {
         if (this.elValueWinRate) {
             this.elValueWinRate.innerText = this.getWinRateValue();
         }

@@ -81,6 +81,7 @@ export class Main {
         if(this.elLastRecord) {
             this.elLastRecord.innerText = this.getShortLastRecordText();
         }
+        this.setWinRateValue();
     }
 
 
@@ -135,7 +136,12 @@ export class Main {
         } else {
             this.loss = newValue;
         }
+        this.setWinRateValue();
 
+    }
+
+
+    private setWinRateValue():void {
         if(this.elValueWinRate) {
             this.elValueWinRate.innerText = this.getWinRateValue();
         }
