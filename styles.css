@@ -20,7 +20,7 @@ body {
     background: var(--color-bg);
     color: white;
     font-family: sans-serif;
-    padding: 15px;
+    padding: 15px 15px 0;
     font-size: 13px;
     max-width: 250px;
 }
