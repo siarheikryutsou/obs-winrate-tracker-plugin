@@ -1,5 +1,6 @@
 import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
 import { DOMElement } from "../shared/ui/DomElement.js";
+import { PageSettings } from "../pages/settings/PageSettings.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");
@@ -51,11 +52,8 @@ export class Main {
         this.container.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
     }
     showSettings() {
-        const elH1 = new DOMElement("h1", undefined, "Coming soon...").getEl();
-        const elP = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl();
-        document.body.classList.add("settings");
-        document.title = "Settings";
-        this.container.append(elH1, elP);
+        const settings = new PageSettings();
+        this.container.append(settings);
     }
     getSourcesText(format) {
         return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;

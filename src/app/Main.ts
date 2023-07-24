@@ -1,5 +1,7 @@
 import {InputWinLoss} from "../shared/ui/InputWinLoss.js";
 import {DOMElement} from "../shared/ui/DomElement.js";
+import {PageSettings} from "../pages/settings/PageSettings.js";
+import {PageSource} from "../pages/source/PageSource";
 
 export class Main {
 
@@ -28,6 +30,7 @@ export class Main {
     }
 
     private showSources():void {
+        const pageSource = new PageSource();
         const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, this.getSourcesText()).getEl() as HTMLParagraphElement;
         document.body.classList.add("source");
         this.container.append(elSourceWrapper);
@@ -81,11 +84,8 @@ export class Main {
 
 
     private showSettings():void {
-        const elH1:HTMLHeadingElement = new DOMElement("h1", undefined, "Coming soon...").getEl() as HTMLHeadingElement;
-        const elP:HTMLParagraphElement = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl() as HTMLParagraphElement;
-        document.body.classList.add("settings");
-        document.title = "Settings";
-        this.container.append(elH1, elP);
+        const settings = new PageSettings()
+        this.container.append(settings);
     }
 
 
