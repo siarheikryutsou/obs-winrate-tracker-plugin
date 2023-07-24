@@ -147,7 +147,7 @@ button.small.icon img {
     margin: var(--margin-row-v) 0;
 }
 
-body > button {
+#app > button {
     margin-top: var(--margin-row-v);
 }
 

@@ -14,4 +14,4 @@
 - Click "OK"
 - Enjoy! :)
 
-![Panel preview](https://siarheikryutsou.github.io/obs-winrate-tracker-plugin/panel_preview.png)
+![Panel preview](https://siarheikryutsou.github.io/obs-winrate-tracker-plugin/build/static/images/panel_preview.png)

@@ -1,9 +1,9 @@
-import {DOMElement} from "./DomElement.js";
-import {InputWinLoss} from "./InputWinLoss.js";
+import {InputWinLoss} from "../shared/ui/InputWinLoss.js";
+import {DOMElement} from "../shared/ui/DomElement.js";
 
 export class Main {
 
-    private body:HTMLElement = document.body;
+    private container:HTMLDivElement = document.getElementById("app") as HTMLDivElement;
     private wins:number = 0;
     private loss:number = 0;
     private lastRecord:string | undefined;
@@ -17,7 +17,6 @@ export class Main {
         this.readValues();
 
         const hash:string = window.location.hash;
-        console.log("hash:", hash)
 
         if(hash === "#source") {
             this.showSources();
@@ -30,8 +29,8 @@ export class Main {
 
     private showSources():void {
         const elSourceWrapper:HTMLParagraphElement = new DOMElement("p", {id:"source"}, this.getSourcesText()).getEl() as HTMLParagraphElement;
-        this.body.classList.add("source");
-        this.body.append(elSourceWrapper);
+        document.body.classList.add("source");
+        this.container.append(elSourceWrapper);
 
         setInterval(() => {
             this.readValues();
@@ -63,11 +62,11 @@ export class Main {
         elSettingsBtn.addEventListener("click", ():void => this.openSettings())
 
         elSettingsBtn.append(
-            new DOMElement("img", {src: "./settings_icon.svg"}).getEl() as HTMLImageElement
+            new DOMElement("img", {src: "./build/static/images/settings_icon.svg"}).getEl() as HTMLImageElement
         )
         elFooter.append(elSettingsBtn);
 
-        this.body.append(
+        this.container.append(
             this.elInputWins.getEl(),
             this.elInputLoss.getEl(),
             elLabelWinRate,
@@ -84,9 +83,9 @@ export class Main {
     private showSettings():void {
         const elH1:HTMLHeadingElement = new DOMElement("h1", undefined, "Coming soon...").getEl() as HTMLHeadingElement;
         const elP:HTMLParagraphElement = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl() as HTMLParagraphElement;
-        this.body.classList.add("settings");
-        this.body.append(elH1, elP);
+        document.body.classList.add("settings");
         document.title = "Settings";
+        this.container.append(elH1, elP);
     }
 
 

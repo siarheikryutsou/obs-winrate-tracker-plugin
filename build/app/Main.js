@@ -1,14 +1,13 @@
-import { DOMElement } from "./DomElement.js";
-import { InputWinLoss } from "./InputWinLoss.js";
+import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
+import { DOMElement } from "../shared/ui/DomElement.js";
 export class Main {
     constructor() {
-        this.body = document.body;
+        this.container = document.getElementById("app");
         this.wins = 0;
         this.loss = 0;
         this.locale = this.getLocale();
         this.readValues();
         const hash = window.location.hash;
-        console.log("hash:", hash);
         if (hash === "#source") {
             this.showSources();
         }
@@ -21,8 +20,8 @@ export class Main {
     }
     showSources() {
         const elSourceWrapper = new DOMElement("p", { id: "source" }, this.getSourcesText()).getEl();
-        this.body.classList.add("source");
-        this.body.append(elSourceWrapper);
+        document.body.classList.add("source");
+        this.container.append(elSourceWrapper);
         setInterval(() => {
             this.readValues();
             const currentValues = this.getSourcesText();
@@ -47,15 +46,16 @@ export class Main {
         this.elInputWins.addEventListener("change", () => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", () => this.onInputChange(this.elInputLoss, "loss"));
         elSettingsBtn.addEventListener("click", () => this.openSettings());
-        elSettingsBtn.append(new DOMElement("img", { src: "./settings_icon.svg" }).getEl());
+        elSettingsBtn.append(new DOMElement("img", { src: "./build/static/images/settings_icon.svg" }).getEl());
         elFooter.append(elSettingsBtn);
-        this.body.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
+        this.container.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
     }
     showSettings() {
         const elH1 = new DOMElement("h1", undefined, "Coming soon...").getEl();
         const elP = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl();
-        this.body.classList.add("settings");
-        this.body.append(elH1, elP);
+        document.body.classList.add("settings");
+        document.title = "Settings";
+        this.container.append(elH1, elP);
     }
     getSourcesText(format) {
         return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
