@@ -1,6 +1,7 @@
 import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
 import { DOMElement } from "../shared/ui/DomElement.js";
 import { PageSettings } from "../pages/settings/PageSettings.js";
+import { PageSource } from "../pages/source/PageSource.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");
@@ -20,14 +21,14 @@ export class Main {
         }
     }
     showSources() {
-        const elSourceWrapper = new DOMElement("p", { id: "source" }, this.getSourcesText()).getEl();
-        document.body.classList.add("source");
-        this.container.append(elSourceWrapper);
+        const pageSource = new PageSource(this.getSourcesText, this.readValues);
+        pageSource.setText(this.getSourcesText());
+        this.container.append(pageSource);
         setInterval(() => {
             this.readValues();
-            const currentValues = this.getSourcesText();
-            if (elSourceWrapper.innerText !== currentValues) {
-                elSourceWrapper.innerText = currentValues;
+            const sourceText = this.getSourcesText();
+            if (pageSource.getText() !== sourceText) {
+                pageSource.setText(sourceText);
             }
         }, 1000);
     }
