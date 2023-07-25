@@ -30,7 +30,7 @@ export class Main {
     }
 
     private showSources():void {
-        const pageSource = new PageSource(this.getSourcesText, this.readValues);
+        const pageSource = new PageSource();
         pageSource.setText(this.getSourcesText());
         this.container.append(pageSource);
 

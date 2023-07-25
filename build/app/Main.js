@@ -21,7 +21,7 @@ export class Main {
         }
     }
     showSources() {
-        const pageSource = new PageSource(this.getSourcesText, this.readValues);
+        const pageSource = new PageSource();
         pageSource.setText(this.getSourcesText());
         this.container.append(pageSource);
         setInterval(() => {

@@ -1,7 +1,7 @@
 import { Page } from "../Page.js";
 import { DOMElement } from "../../shared/ui/DomElement.js";
 export class PageSource extends Page {
-    constructor(getTextCallback, getValuesCallback) {
+    constructor() {
         super();
         this.elTextWrapper = new DOMElement("p", { id: "source" }).getEl();
         document.body.classList.add("source");
