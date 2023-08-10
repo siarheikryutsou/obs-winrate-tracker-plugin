@@ -30,17 +30,22 @@ export class Main {
     }
 
     private showSources():void {
-        const pageSource = new PageSource();
+        const pageSource: PageSource = new PageSource();
         pageSource.setText(this.getSourcesText());
         this.container.append(pageSource);
 
-        setInterval(() => {
-            this.readValues();
-            const sourceText:string = this.getSourcesText();
-            if(pageSource.getText() !== sourceText) {
-                pageSource.setText(sourceText);
+        addEventListener("storage", (event: StorageEvent): void => {
+            switch (event.key) {
+                case "wins":
+                case "loss":
+                    this.readValues();
+                    const sourceText:string = this.getSourcesText();
+                    if(pageSource.getText() !== sourceText) {
+                        pageSource.setText(sourceText);
+                    }
+                    break;
             }
-        }, 1000);
+        });
     }
 
 

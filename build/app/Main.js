@@ -21,16 +21,22 @@ export class Main {
         }
     }
     showSources() {
+        console.log("showSources");
         const pageSource = new PageSource();
         pageSource.setText(this.getSourcesText());
         this.container.append(pageSource);
-        setInterval(() => {
-            this.readValues();
-            const sourceText = this.getSourcesText();
-            if (pageSource.getText() !== sourceText) {
-                pageSource.setText(sourceText);
+        addEventListener("storage", (event) => {
+            switch (event.key) {
+                case "wins":
+                case "loss":
+                    this.readValues();
+                    const sourceText = this.getSourcesText();
+                    if (pageSource.getText() !== sourceText) {
+                        pageSource.setText(sourceText);
+                    }
+                    break;
             }
-        }, 1000);
+        });
     }
     showDock() {
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
