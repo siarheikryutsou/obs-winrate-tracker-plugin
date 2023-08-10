@@ -1,5 +1,7 @@
 import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
 import { DOMElement } from "../shared/ui/DomElement.js";
+import { PageSettings } from "../pages/settings/PageSettings.js";
+import { PageSource } from "../pages/source/PageSource.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");
@@ -19,16 +21,22 @@ export class Main {
         }
     }
     showSources() {
-        const elSourceWrapper = new DOMElement("p", { id: "source" }, this.getSourcesText()).getEl();
-        document.body.classList.add("source");
-        this.container.append(elSourceWrapper);
-        setInterval(() => {
-            this.readValues();
-            const currentValues = this.getSourcesText();
-            if (elSourceWrapper.innerText !== currentValues) {
-                elSourceWrapper.innerText = currentValues;
+        console.log("showSources");
+        const pageSource = new PageSource();
+        pageSource.setText(this.getSourcesText());
+        this.container.append(pageSource);
+        addEventListener("storage", (event) => {
+            switch (event.key) {
+                case "wins":
+                case "loss":
+                    this.readValues();
+                    const sourceText = this.getSourcesText();
+                    if (pageSource.getText() !== sourceText) {
+                        pageSource.setText(sourceText);
+                    }
+                    break;
             }
-        }, 1000);
+        });
     }
     showDock() {
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
@@ -51,11 +59,8 @@ export class Main {
         this.container.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
     }
     showSettings() {
-        const elH1 = new DOMElement("h1", undefined, "Coming soon...").getEl();
-        const elP = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl();
-        document.body.classList.add("settings");
-        document.title = "Settings";
-        this.container.append(elH1, elP);
+        const settings = new PageSettings();
+        this.container.append(settings);
     }
     getSourcesText(format) {
         return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
