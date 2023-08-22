@@ -11,12 +11,13 @@ export class PageSource extends Page {
         super();
         document.body.classList.add("source");
         this.append(this.elTextWrapper);
-        this.style.fontFamily = this.config.getFontFamily();
+        this.setStyles();
+
 
         window.addEventListener("storage", (event: StorageEvent): void => {
             if(event.key === "config") {
                 this.config.readConfig();
-                this.style.fontFamily = this.config.getFontFamily();
+                this.setStyles();
             }
         })
     }
@@ -27,6 +28,12 @@ export class PageSource extends Page {
 
     getText():string {
         return this.elTextWrapper.innerText;
+    }
+
+
+    private setStyles(): void {
+        this.style.fontFamily = this.config.getFontFamily();
+        this.style.fontSize = this.config.getFontSize() + "px";
     }
 }
 

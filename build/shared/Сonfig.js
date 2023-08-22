@@ -3,7 +3,8 @@ export class Config {
         this.config = {
             useSaveButton: true,
             showLastSaveInfo: true,
-            fontFamily: "Arial"
+            fontFamily: "Arial",
+            fontSize: 48,
         };
     }
     static getInstance() {
@@ -17,9 +18,10 @@ export class Config {
         if (configData) {
             const configJSON = JSON.parse(configData);
             this.config = {
-                useSaveButton: configJSON.useSaveButton,
-                showLastSaveInfo: configJSON.showLastSaveInfo,
-                fontFamily: configJSON.fontFamily
+                useSaveButton: configJSON.useSaveButton || this.config.showLastSaveInfo,
+                showLastSaveInfo: configJSON.showLastSaveInfo || this.config.showLastSaveInfo,
+                fontFamily: configJSON.fontFamily || this.config.fontFamily,
+                fontSize: configJSON.fontSize || this.config.fontSize
             };
         }
     }
@@ -43,6 +45,12 @@ export class Config {
     }
     getFontFamily() {
         return this.config.fontFamily;
+    }
+    setFontSize(size) {
+        this.config.fontSize = size;
+    }
+    getFontSize() {
+        return this.config.fontSize;
     }
 }
 //# sourceMappingURL=%D0%A1onfig.js.map

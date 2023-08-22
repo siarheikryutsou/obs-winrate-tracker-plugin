@@ -7,7 +7,8 @@ export class Config {
     private config:IConfig = {
         useSaveButton: true,
         showLastSaveInfo: true,
-        fontFamily: "Arial"
+        fontFamily: "Arial",
+        fontSize: 48,
     };
 
     private constructor() {
@@ -27,9 +28,10 @@ export class Config {
         if(configData) {
             const configJSON:IConfig = JSON.parse(configData);
             this.config = {
-                useSaveButton: configJSON.useSaveButton,
-                showLastSaveInfo: configJSON.showLastSaveInfo,
-                fontFamily: configJSON.fontFamily
+                useSaveButton: configJSON.useSaveButton || this.config.showLastSaveInfo,
+                showLastSaveInfo: configJSON.showLastSaveInfo || this.config.showLastSaveInfo,
+                fontFamily: configJSON.fontFamily || this.config.fontFamily,
+                fontSize: configJSON.fontSize || this.config.fontSize
             }
         }
     }
@@ -67,6 +69,15 @@ export class Config {
 
     public getFontFamily(): string {
         return this.config.fontFamily;
+    }
+
+
+    public setFontSize(size: number): void {
+        this.config.fontSize = size;
+    }
+
+    public getFontSize(): number {
+        return this.config.fontSize;
     }
 
 }

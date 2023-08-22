@@ -28,7 +28,6 @@ body {
 body.source {
     background: transparent;
     color: white;
-    font-size: 48px;
     width: 100%;
     max-width: none;
 }
@@ -69,7 +68,6 @@ body.settings fieldset+fieldset {
 
 #source {
     color:white;
-    font-size: 48px;
     width: 100%;
     text-align: center;
     text-shadow: 2px 2px 0 #000000, 2px -2px 0 #000000, -2px 2px 0 #000000, -2px -2px 0 #000000, 2px 0 0 #000000, 0 2px 0 #000000, -2px 0 0 #000000, 0 -2px 0 #000000;

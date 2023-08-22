@@ -42,6 +42,10 @@ export class PageSettings extends Page {
                         <!--<option>MS Serif</option>-->
                     </select>
                 </div>
+                <div>
+                    <label for="fontSize">Font Size</label>
+                    <input type="number" id="fontSize" value="${this.config.getFontSize()}">
+                </div>
             </fieldset>`.trim();
     }
 
@@ -78,6 +82,14 @@ export class PageSettings extends Page {
             select.addEventListener("change", (event: Event): void => {
                 const select: HTMLSelectElement = event.currentTarget as HTMLSelectElement;
                 this.config.setFontFamily(select.value);
+                this.config.saveConfig();
+            })
+        }
+
+        const fontSizeInput:HTMLInputElement | null = document.querySelector("#fontSize");
+        if(fontSizeInput) {
+            fontSizeInput.addEventListener("change", (event: Event): void => {
+                this.config.setFontSize(parseInt(fontSizeInput.value));
                 this.config.saveConfig();
             })
         }

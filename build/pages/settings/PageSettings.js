@@ -31,12 +31,16 @@ export class PageSettings extends Page {
                         <option>Impact</option>
                         <option>Lucida Console</option>
                         <option>Tahoma</option>
-                        <option>Times New Roman</option>
+                        <!--<option>Times New Roman</option>-->
                         <option>Trebuchet MS</option>
                         <option>Verdana</option>
                         <option>MS Sans Serif</option>
-                        <option>MS Serif</option>
+                        <!--<option>MS Serif</option>-->
                     </select>
+                </div>
+                <div>
+                    <label for="fontSize">Font Size</label>
+                    <input type="number" id="fontSize" value="${this.config.getFontSize()}">
                 </div>
             </fieldset>`.trim();
     }
@@ -68,6 +72,13 @@ export class PageSettings extends Page {
             select.addEventListener("change", (event) => {
                 const select = event.currentTarget;
                 this.config.setFontFamily(select.value);
+                this.config.saveConfig();
+            });
+        }
+        const fontSizeInput = document.querySelector("#fontSize");
+        if (fontSizeInput) {
+            fontSizeInput.addEventListener("change", (event) => {
+                this.config.setFontSize(parseInt(fontSizeInput.value));
                 this.config.saveConfig();
             });
         }
