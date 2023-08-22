@@ -42,6 +42,10 @@ export class PageSettings extends Page {
                     <label for="fontSize">Font Size</label>
                     <input type="number" id="fontSize" value="${this.config.getFontSize()}">
                 </div>
+                <div>
+                    <label for="fontColor">Font Color</label>
+                    <input type="color" id="fontColor" value="${this.config.getFontColor()}">
+                </div>
             </fieldset>`.trim();
     }
     connectedCallback() {
@@ -79,6 +83,13 @@ export class PageSettings extends Page {
         if (fontSizeInput) {
             fontSizeInput.addEventListener("change", (event) => {
                 this.config.setFontSize(parseInt(fontSizeInput.value));
+                this.config.saveConfig();
+            });
+        }
+        const fontColorInput = document.querySelector("#fontColor");
+        if (fontColorInput) {
+            fontColorInput.addEventListener("change", (event) => {
+                this.config.setFontColor(fontColorInput.value);
                 this.config.saveConfig();
             });
         }

@@ -9,6 +9,7 @@ export class Config {
         showLastSaveInfo: true,
         fontFamily: "Arial",
         fontSize: 48,
+        fontColor: "#FFFFFF",
     };
 
     private constructor() {
@@ -31,7 +32,8 @@ export class Config {
                 useSaveButton: configJSON.useSaveButton ?? this.config.showLastSaveInfo,
                 showLastSaveInfo: configJSON.showLastSaveInfo ?? this.config.showLastSaveInfo,
                 fontFamily: configJSON.fontFamily ?? this.config.fontFamily,
-                fontSize: configJSON.fontSize ?? this.config.fontSize
+                fontSize: configJSON.fontSize ?? this.config.fontSize,
+                fontColor: configJSON.fontColor ?? this.config.fontColor
             }
         }
     }
@@ -78,6 +80,14 @@ export class Config {
 
     public getFontSize(): number {
         return this.config.fontSize;
+    }
+
+    public setFontColor(color: string): void {
+        this.config.fontColor = color;
+    }
+
+    public getFontColor(): string {
+        return this.config.fontColor;
     }
 
 }

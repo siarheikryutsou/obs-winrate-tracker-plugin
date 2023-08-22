@@ -34,6 +34,7 @@ export class PageSource extends Page {
     private setStyles(): void {
         this.style.fontFamily = this.config.getFontFamily();
         this.style.fontSize = this.config.getFontSize() + "px";
+        this.style.color = this.config.getFontColor();
     }
 }
 
