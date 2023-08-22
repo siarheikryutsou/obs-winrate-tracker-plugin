@@ -17,6 +17,10 @@ export class PageSettings extends Page {
                     <label for="showLastSaveInfo">Show "Last Save" info:</label>
                     <input type="checkbox" id="showLastSaveInfo"${this.config.getValue("showLastSaveInfo") ? "checked" : ""}>
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Source settings</legend>
+                <h3>Coming soon...</h3>
             </fieldset>`.trim();
     }
     connectedCallback() {

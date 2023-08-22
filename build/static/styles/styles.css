@@ -57,6 +57,10 @@ body.settings fieldset > div {
     margin-top: 10px;
 }
 
+body.settings fieldset+fieldset {
+    margin-top: 25px;
+}
+
 #source {
     color:white;
     font-size: 48px;
