@@ -1,13 +1,37 @@
 import { Page } from "../Page.js";
-import { DOMElement } from "../../shared/ui/DomElement.js";
+import { Config } from "../../shared/Сonfig.js";
 export class PageSettings extends Page {
     constructor() {
         super();
-        const elH1 = new DOMElement("h1", undefined, "Coming soon...").getEl();
-        const elP = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl();
+        this.config = Config.getInstance();
         document.body.classList.add("settings");
         document.title = "Settings";
-        this.append(elH1, elP);
+        this.innerHTML =
+            `<fieldset>
+                <legend>Save settings</legend>
+                <div>
+                    <label for="useSaveButton">Use "Save" button</label>
+                    <input type="checkbox" id="useSaveButton"${this.config.getValue("useSaveButton") ? "checked" : ""}>
+                </div>
+                <div>
+                    <label for="showLastSaveInfo">Show "Last Save" info:</label>
+                    <input type="checkbox" id="showLastSaveInfo"${this.config.getValue("showLastSaveInfo") ? "checked" : ""}>
+                </div>
+            </fieldset>`.trim();
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this.querySelectorAll("input").forEach((input) => {
+            input.addEventListener("change", (event) => {
+                const el = event.currentTarget;
+                if (el) {
+                    const input = el;
+                    this.config.setValue(input.id, input.checked);
+                    this.config.saveConfig();
+                }
+            });
+        });
+        this.config.saveConfig();
     }
 }
 customElements.define("el-page-settings", PageSettings);

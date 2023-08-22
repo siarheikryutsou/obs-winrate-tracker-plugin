@@ -1,15 +1,44 @@
 import {Page} from "../Page.js";
-import {DOMElement} from "../../shared/ui/DomElement.js";
+import {Config} from "../../shared/Сonfig.js";
+import {IConfig} from "../../shared/interfaces/IConfig";
 
 export class PageSettings extends Page {
+
+    private config:Config = Config.getInstance();
     constructor() {
         super();
-        const elH1:HTMLHeadingElement = new DOMElement("h1", undefined, "Coming soon...").getEl() as HTMLHeadingElement;
-        const elP:HTMLParagraphElement = new DOMElement("p", undefined, "Currently, this section is under development. In the future, you will be able to customize and style the output of results for your stream, add animations, and configure colors and styles. Stay tuned for updates.").getEl() as HTMLParagraphElement;
         document.body.classList.add("settings");
         document.title = "Settings";
-        this.append(elH1, elP);
+
+        this.innerHTML =
+            `<fieldset>
+                <legend>Save settings</legend>
+                <div>
+                    <label for="useSaveButton">Use "Save" button</label>
+                    <input type="checkbox" id="useSaveButton"${this.config.getValue("useSaveButton") ? "checked" : ""}>
+                </div>
+                <div>
+                    <label for="showLastSaveInfo">Show "Last Save" info:</label>
+                    <input type="checkbox" id="showLastSaveInfo"${this.config.getValue("showLastSaveInfo") ? "checked" : ""}>
+                </div>
+            </fieldset>`.trim();
     }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        this.querySelectorAll("input").forEach((input: HTMLInputElement): void => {
+            input.addEventListener("change", (event: Event): void => {
+                const el:EventTarget | null = event.currentTarget;
+                if(el) {
+                    const input: HTMLInputElement = el as HTMLInputElement;
+                    this.config.setValue(input.id as keyof IConfig, input.checked);
+                    this.config.saveConfig();
+                }
+            })
+        });
+        this.config.saveConfig();
+    }
+
 }
 
 customElements.define("el-page-settings", PageSettings);

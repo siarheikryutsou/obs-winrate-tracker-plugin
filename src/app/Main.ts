@@ -2,6 +2,7 @@ import {InputWinLoss} from "../shared/ui/InputWinLoss.js";
 import {DOMElement} from "../shared/ui/DomElement.js";
 import {PageSettings} from "../pages/settings/PageSettings.js";
 import {PageSource} from "../pages/source/PageSource.js";
+import {Config} from "../shared/Сonfig.js";
 
 export class Main {
 
@@ -14,9 +15,11 @@ export class Main {
     private elInputLoss:InputWinLoss | undefined;
     private elValueWinRate:HTMLLabelElement | undefined;
     private elLastRecord:HTMLParagraphElement | undefined;
+    private config:Config = Config.getInstance();
 
     constructor() {
         this.readValues();
+        this.config.readConfig();
 
         const hash:string = window.location.hash;
 
@@ -50,6 +53,9 @@ export class Main {
 
 
     private showDock():void {
+        const useSaveBtn: boolean = this.config.getValue("useSaveButton");
+        const showLastSaveInfo: boolean = this.config.getValue("showLastSaveInfo");
+
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
         const elBtnSave:HTMLButtonElement = new DOMElement("button", undefined, "Save").getEl() as HTMLButtonElement;
@@ -60,9 +66,8 @@ export class Main {
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl() as HTMLLabelElement;
-
-        elBtnReset.addEventListener("click", ():void => this.resetAllRecords());
         elBtnSave.addEventListener("click", ():void => this.saveRecords());
+        elBtnReset.addEventListener("click", ():void => this.resetAllRecords());
         this.elInputWins.addEventListener("change", ():void => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", ():void => this.onInputChange(this.elInputLoss, "loss"));
 
@@ -84,11 +89,33 @@ export class Main {
             elBtnReset,
             elFooter
         );
+
+        if(!useSaveBtn) {
+            elBtnSave.style.display = "none";
+        }
+
+        if(!showLastSaveInfo) {
+            elLastLabel.style.display = "none";
+            this.elLastRecord.style.display = "none";
+        }
+
+        window.addEventListener("storage", (event:StorageEvent): void => {
+            if(event.key === "config") {
+                this.config.readConfig();
+                elBtnSave.style.display = this.config.getValue("useSaveButton") ? "block" : "none";
+
+                const showLastSaveInfo: boolean = this.config.getValue("showLastSaveInfo");
+                elLastLabel.style.display = showLastSaveInfo ? "block" : "none";
+                if(this.elLastRecord) {
+                    this.elLastRecord.style.display = showLastSaveInfo ? "block" : "none";
+                }
+            }
+        })
     }
 
 
     private showSettings():void {
-        const settings = new PageSettings()
+        const settings: PageSettings = new PageSettings()
         this.container.append(settings);
     }
 
@@ -174,7 +201,12 @@ export class Main {
         } else {
             this.loss = newValue;
         }
+
         this.setWinRateValue();
+
+        if(!this.config.getValue("useSaveButton")) {
+            this.saveRecords();
+        }
 
     }
 

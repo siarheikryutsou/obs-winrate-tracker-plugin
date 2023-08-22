@@ -7,6 +7,7 @@ interface IDomElementAttributes {
     min?:string
     class?:string
     src?:string
+    style?:string
 }
 
 export class DOMElement extends DomElementBase {

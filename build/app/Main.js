@@ -2,13 +2,16 @@ import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
 import { DOMElement } from "../shared/ui/DomElement.js";
 import { PageSettings } from "../pages/settings/PageSettings.js";
 import { PageSource } from "../pages/source/PageSource.js";
+import { Config } from "../shared/Сonfig.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");
         this.wins = 0;
         this.loss = 0;
         this.locale = this.getLocale();
+        this.config = Config.getInstance();
         this.readValues();
+        this.config.readConfig();
         const hash = window.location.hash;
         if (hash === "#source") {
             this.showSources();
@@ -21,7 +24,6 @@ export class Main {
         }
     }
     showSources() {
-        console.log("showSources");
         const pageSource = new PageSource();
         pageSource.setText(this.getSourcesText());
         this.container.append(pageSource);
@@ -39,6 +41,8 @@ export class Main {
         });
     }
     showDock() {
+        const useSaveBtn = this.config.getValue("useSaveButton");
+        const showLastSaveInfo = this.config.getValue("showLastSaveInfo");
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel = new DOMElement("label", { id: "last-record-label" }, "Last Record:").getEl();
         const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
@@ -49,14 +53,32 @@ export class Main {
         this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
         this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
         this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
-        elBtnReset.addEventListener("click", () => this.resetAllRecords());
         elBtnSave.addEventListener("click", () => this.saveRecords());
+        elBtnReset.addEventListener("click", () => this.resetAllRecords());
         this.elInputWins.addEventListener("change", () => this.onInputChange(this.elInputWins, "wins"));
         this.elInputLoss.addEventListener("change", () => this.onInputChange(this.elInputLoss, "loss"));
         elSettingsBtn.addEventListener("click", () => this.openSettings());
         elSettingsBtn.append(new DOMElement("img", { src: "./build/static/images/settings_icon.svg" }).getEl());
         elFooter.append(elSettingsBtn);
         this.container.append(this.elInputWins.getEl(), this.elInputLoss.getEl(), elLabelWinRate, this.elValueWinRate, elLastLabel, this.elLastRecord, elBtnSave, elBtnReset, elFooter);
+        if (!useSaveBtn) {
+            elBtnSave.style.display = "none";
+        }
+        if (!showLastSaveInfo) {
+            elLastLabel.style.display = "none";
+            this.elLastRecord.style.display = "none";
+        }
+        window.addEventListener("storage", (event) => {
+            if (event.key === "config") {
+                this.config.readConfig();
+                elBtnSave.style.display = this.config.getValue("useSaveButton") ? "block" : "none";
+                const showLastSaveInfo = this.config.getValue("showLastSaveInfo");
+                elLastLabel.style.display = showLastSaveInfo ? "block" : "none";
+                if (this.elLastRecord) {
+                    this.elLastRecord.style.display = showLastSaveInfo ? "block" : "none";
+                }
+            }
+        });
     }
     showSettings() {
         const settings = new PageSettings();
@@ -134,6 +156,9 @@ export class Main {
             this.loss = newValue;
         }
         this.setWinRateValue();
+        if (!this.config.getValue("useSaveButton")) {
+            this.saveRecords();
+        }
     }
     setWinRateValue() {
         if (this.elValueWinRate) {

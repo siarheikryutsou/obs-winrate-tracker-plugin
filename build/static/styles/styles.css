@@ -42,6 +42,21 @@ body.settings h1 {
     margin-bottom: var(--margin-row-v);
 }
 
+body.settings fieldset {
+    padding: 0.35rem 0.75rem 0.75rem;
+}
+
+body.settings fieldset legend {
+    font-weight: bold;
+}
+
+
+body.settings fieldset > div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
 #source {
     color:white;
     font-size: 48px;
