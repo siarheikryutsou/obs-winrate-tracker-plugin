@@ -1,4 +1,4 @@
-import {IConfig} from "./interfaces/IConfig";
+import {IConfig, IConfigCheckboxes} from "./interfaces/IConfig";
 
 export class Config {
 
@@ -6,7 +6,8 @@ export class Config {
 
     private config:IConfig = {
         useSaveButton: true,
-        showLastSaveInfo: true
+        showLastSaveInfo: true,
+        fontFamily: "Arial"
     };
 
     private constructor() {
@@ -27,7 +28,8 @@ export class Config {
             const configJSON:IConfig = JSON.parse(configData);
             this.config = {
                 useSaveButton: configJSON.useSaveButton,
-                showLastSaveInfo: configJSON.showLastSaveInfo
+                showLastSaveInfo: configJSON.showLastSaveInfo,
+                fontFamily: configJSON.fontFamily
             }
         }
     }
@@ -43,13 +45,28 @@ export class Config {
     }
 
 
-    public getValue(fieldName: keyof IConfig): boolean {
-        return this.config[fieldName];
+    public getUseSaveBtnValue(): boolean  {
+        return this.config.useSaveButton;
     }
 
 
-    public setValue(fieldName: keyof IConfig, value: boolean): void {
+    public getShowLastSaveInfoValue(): boolean {
+        return this.config.showLastSaveInfo
+    }
+
+
+    public setCheckBoxValue(fieldName: keyof IConfigCheckboxes, value: boolean): void {
         this.config[fieldName] = value;
+    }
+
+
+    public setFontFamily(fontFamily: string): void {
+        this.config.fontFamily = fontFamily.trim();
+    }
+
+
+    public getFontFamily(): string {
+        return this.config.fontFamily;
     }
 
 }

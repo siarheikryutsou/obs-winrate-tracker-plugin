@@ -41,8 +41,8 @@ export class Main {
         });
     }
     showDock() {
-        const useSaveBtn = this.config.getValue("useSaveButton");
-        const showLastSaveInfo = this.config.getValue("showLastSaveInfo");
+        const useSaveBtn = this.config.getUseSaveBtnValue();
+        const showLastSaveInfo = this.config.getShowLastSaveInfoValue();
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel = new DOMElement("label", { id: "last-record-label" }, "Last Record:").getEl();
         const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
@@ -71,8 +71,8 @@ export class Main {
         window.addEventListener("storage", (event) => {
             if (event.key === "config") {
                 this.config.readConfig();
-                elBtnSave.style.display = this.config.getValue("useSaveButton") ? "block" : "none";
-                const showLastSaveInfo = this.config.getValue("showLastSaveInfo");
+                elBtnSave.style.display = this.config.getUseSaveBtnValue() ? "block" : "none";
+                const showLastSaveInfo = this.config.getShowLastSaveInfoValue();
                 elLastLabel.style.display = showLastSaveInfo ? "block" : "none";
                 if (this.elLastRecord) {
                     this.elLastRecord.style.display = showLastSaveInfo ? "block" : "none";
@@ -156,7 +156,7 @@ export class Main {
             this.loss = newValue;
         }
         this.setWinRateValue();
-        if (!this.config.getValue("useSaveButton")) {
+        if (!this.config.getUseSaveBtnValue()) {
             this.saveRecords();
         }
     }

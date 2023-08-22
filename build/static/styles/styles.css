@@ -57,6 +57,12 @@ body.settings fieldset > div {
     margin-top: 10px;
 }
 
+
+body.settings fieldset label {
+    width: 100%;
+}
+
+
 body.settings fieldset+fieldset {
     margin-top: 25px;
 }

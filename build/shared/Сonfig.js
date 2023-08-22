@@ -2,7 +2,8 @@ export class Config {
     constructor() {
         this.config = {
             useSaveButton: true,
-            showLastSaveInfo: true
+            showLastSaveInfo: true,
+            fontFamily: "Arial"
         };
     }
     static getInstance() {
@@ -17,7 +18,8 @@ export class Config {
             const configJSON = JSON.parse(configData);
             this.config = {
                 useSaveButton: configJSON.useSaveButton,
-                showLastSaveInfo: configJSON.showLastSaveInfo
+                showLastSaveInfo: configJSON.showLastSaveInfo,
+                fontFamily: configJSON.fontFamily
             };
         }
     }
@@ -27,11 +29,20 @@ export class Config {
     toJSONString() {
         return JSON.stringify(this.config);
     }
-    getValue(fieldName) {
-        return this.config[fieldName];
+    getUseSaveBtnValue() {
+        return this.config.useSaveButton;
     }
-    setValue(fieldName, value) {
+    getShowLastSaveInfoValue() {
+        return this.config.showLastSaveInfo;
+    }
+    setCheckBoxValue(fieldName, value) {
         this.config[fieldName] = value;
+    }
+    setFontFamily(fontFamily) {
+        this.config.fontFamily = fontFamily.trim();
+    }
+    getFontFamily() {
+        return this.config.fontFamily;
     }
 }
 //# sourceMappingURL=%D0%A1onfig.js.map

@@ -53,8 +53,8 @@ export class Main {
 
 
     private showDock():void {
-        const useSaveBtn: boolean = this.config.getValue("useSaveButton");
-        const showLastSaveInfo: boolean = this.config.getValue("showLastSaveInfo");
+        const useSaveBtn: boolean = this.config.getUseSaveBtnValue();
+        const showLastSaveInfo: boolean = this.config.getShowLastSaveInfoValue();
 
         const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
         const elLastLabel:HTMLLabelElement = new DOMElement("label", {id: "last-record-label"}, "Last Record:").getEl() as HTMLLabelElement;
@@ -102,9 +102,9 @@ export class Main {
         window.addEventListener("storage", (event:StorageEvent): void => {
             if(event.key === "config") {
                 this.config.readConfig();
-                elBtnSave.style.display = this.config.getValue("useSaveButton") ? "block" : "none";
+                elBtnSave.style.display = this.config.getUseSaveBtnValue() ? "block" : "none";
 
-                const showLastSaveInfo: boolean = this.config.getValue("showLastSaveInfo");
+                const showLastSaveInfo: boolean = this.config.getShowLastSaveInfoValue();
                 elLastLabel.style.display = showLastSaveInfo ? "block" : "none";
                 if(this.elLastRecord) {
                     this.elLastRecord.style.display = showLastSaveInfo ? "block" : "none";
@@ -204,7 +204,7 @@ export class Main {
 
         this.setWinRateValue();
 
-        if(!this.config.getValue("useSaveButton")) {
+        if(!this.config.getUseSaveBtnValue()) {
             this.saveRecords();
         }
 
