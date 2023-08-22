@@ -1,6 +1,6 @@
 import { Page } from "../Page.js";
 import { DOMElement } from "../../shared/ui/DomElement.js";
-import { Config } from "../../shared/Сonfig.js";
+import { Config } from "../../shared/Config.js";
 export class PageSource extends Page {
     constructor() {
         super();

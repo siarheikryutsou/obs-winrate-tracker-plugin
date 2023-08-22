@@ -28,10 +28,10 @@ export class Config {
         if(configData) {
             const configJSON:IConfig = JSON.parse(configData);
             this.config = {
-                useSaveButton: configJSON.useSaveButton || this.config.showLastSaveInfo,
-                showLastSaveInfo: configJSON.showLastSaveInfo || this.config.showLastSaveInfo,
-                fontFamily: configJSON.fontFamily || this.config.fontFamily,
-                fontSize: configJSON.fontSize || this.config.fontSize
+                useSaveButton: configJSON.useSaveButton ?? this.config.showLastSaveInfo,
+                showLastSaveInfo: configJSON.showLastSaveInfo ?? this.config.showLastSaveInfo,
+                fontFamily: configJSON.fontFamily ?? this.config.fontFamily,
+                fontSize: configJSON.fontSize ?? this.config.fontSize
             }
         }
     }

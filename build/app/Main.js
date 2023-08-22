@@ -2,7 +2,7 @@ import { InputWinLoss } from "../shared/ui/InputWinLoss.js";
 import { DOMElement } from "../shared/ui/DomElement.js";
 import { PageSettings } from "../pages/settings/PageSettings.js";
 import { PageSource } from "../pages/source/PageSource.js";
-import { Config } from "../shared/Сonfig.js";
+import { Config } from "../shared/Config.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");

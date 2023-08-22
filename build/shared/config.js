@@ -1,10 +1,10 @@
 export class Config {
     constructor() {
         this.config = {
-            saveSettings: {
-                useSaveButton: true,
-                showLastSaveInfo: true
-            }
+            useSaveButton: true,
+            showLastSaveInfo: true,
+            fontFamily: "Arial",
+            fontSize: 48,
         };
     }
     static getInstance() {
@@ -14,13 +14,15 @@ export class Config {
         return Config.instance;
     }
     readConfig() {
+        var _a, _b, _c, _d;
         const configData = window.localStorage.getItem("config");
         if (configData) {
             const configJSON = JSON.parse(configData);
-            const saveSettings = configJSON.saveSettings;
-            this.config.saveSettings = {
-                useSaveButton: saveSettings.useSaveButton,
-                showLastSaveInfo: saveSettings.showLastSaveInfo
+            this.config = {
+                useSaveButton: (_a = configJSON.useSaveButton) !== null && _a !== void 0 ? _a : this.config.showLastSaveInfo,
+                showLastSaveInfo: (_b = configJSON.showLastSaveInfo) !== null && _b !== void 0 ? _b : this.config.showLastSaveInfo,
+                fontFamily: (_c = configJSON.fontFamily) !== null && _c !== void 0 ? _c : this.config.fontFamily,
+                fontSize: (_d = configJSON.fontSize) !== null && _d !== void 0 ? _d : this.config.fontSize
             };
         }
     }
@@ -30,5 +32,26 @@ export class Config {
     toJSONString() {
         return JSON.stringify(this.config);
     }
+    getUseSaveBtnValue() {
+        return this.config.useSaveButton;
+    }
+    getShowLastSaveInfoValue() {
+        return this.config.showLastSaveInfo;
+    }
+    setCheckBoxValue(fieldName, value) {
+        this.config[fieldName] = value;
+    }
+    setFontFamily(fontFamily) {
+        this.config.fontFamily = fontFamily.trim();
+    }
+    getFontFamily() {
+        return this.config.fontFamily;
+    }
+    setFontSize(size) {
+        this.config.fontSize = size;
+    }
+    getFontSize() {
+        return this.config.fontSize;
+    }
 }
-//# sourceMappingURL=config.js.map
+//# sourceMappingURL=Config.js.map

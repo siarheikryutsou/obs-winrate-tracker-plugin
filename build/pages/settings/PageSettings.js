@@ -1,5 +1,5 @@
 import { Page } from "../Page.js";
-import { Config } from "../../shared/Сonfig.js";
+import { Config } from "../../shared/Config.js";
 export class PageSettings extends Page {
     constructor() {
         super();

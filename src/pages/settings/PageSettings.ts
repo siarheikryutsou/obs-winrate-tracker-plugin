@@ -1,6 +1,6 @@
 import {Page} from "../Page.js";
-import {Config} from "../../shared/Сonfig.js";
-import {IConfig, IConfigCheckboxes} from "../../shared/interfaces/IConfig";
+import {Config} from "../../shared/Config.js";
+import {IConfigCheckboxes} from "../../shared/interfaces/IConfig";
 
 export class PageSettings extends Page {
 
