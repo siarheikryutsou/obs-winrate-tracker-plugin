@@ -3,6 +3,7 @@ import { DOMElement } from "../shared/ui/DomElement.js";
 import { PageSettings } from "../pages/settings/PageSettings.js";
 import { PageSource } from "../pages/source/PageSource.js";
 import { Config } from "../shared/Config.js";
+import { TEXT_WIN, TEXT_LOSS, TEXT_WIN_RATE, TEXT_WIN_SHORT, TEXT_LOSS_SHORT, TEXT_WIN_RATE_SHORT, TEXT_LAST_RECORD, TEXT_SAVE, TEXT_RESET } from "../shared/Constants.js";
 export class Main {
     constructor() {
         this.container = document.getElementById("app");
@@ -43,15 +44,15 @@ export class Main {
     showDock() {
         const useSaveBtn = this.config.getUseSaveBtnValue();
         const showLastSaveInfo = this.config.getShowLastSaveInfoValue();
-        const elLabelWinRate = new DOMElement("label", undefined, "WinRate: ").getEl();
-        const elLastLabel = new DOMElement("label", { id: "last-record-label" }, "Last Record:").getEl();
-        const elBtnSave = new DOMElement("button", undefined, "Save").getEl();
-        const elBtnReset = new DOMElement("button", undefined, "Reset All Records").getEl();
+        const elLabelWinRate = new DOMElement("label", undefined, `${TEXT_WIN_RATE}: `).getEl();
+        const elLastLabel = new DOMElement("label", { id: "last-record-label" }, TEXT_LAST_RECORD).getEl();
+        const elBtnSave = new DOMElement("button", undefined, TEXT_SAVE).getEl();
+        const elBtnReset = new DOMElement("button", undefined, TEXT_RESET).getEl();
         const elFooter = new DOMElement("div", { id: "footer" }).getEl();
         const elSettingsBtn = new DOMElement("button", { class: "small icon" }).getEl();
         this.elLastRecord = new DOMElement("p", undefined, this.getShortLastRecordText()).getEl();
-        this.elInputWins = new InputWinLoss("input-wins", "Wins", this.wins);
-        this.elInputLoss = new InputWinLoss("input-loss", "Loss", this.loss);
+        this.elInputWins = new InputWinLoss("input-wins", TEXT_WIN, this.wins);
+        this.elInputLoss = new InputWinLoss("input-loss", TEXT_LOSS, this.loss);
         this.elValueWinRate = new DOMElement("span", undefined, this.getWinRateValue()).getEl();
         elBtnSave.addEventListener("click", () => this.saveRecords());
         elBtnReset.addEventListener("click", () => this.resetAllRecords());
@@ -85,11 +86,11 @@ export class Main {
         this.container.append(settings);
     }
     getSourcesText(format) {
-        return `Wins: ${this.wins} | Loss: ${this.loss} | WinRate: ${this.getWinRateValue()}`;
+        return `${TEXT_WIN}: ${this.wins} | ${TEXT_LOSS}: ${this.loss} | ${TEXT_WIN_RATE}: ${this.getWinRateValue()}`;
     }
     getShortLastRecordText() {
         if (this.lastRecord) {
-            return this.lastRecord.replace("Wins", "W").replace("Loss", "L").replace("WinRate", "WR");
+            return this.lastRecord.replace(TEXT_WIN_RATE, TEXT_WIN_RATE_SHORT).replace(TEXT_WIN, TEXT_WIN_SHORT).replace(TEXT_LOSS, TEXT_LOSS_SHORT);
         }
         return "";
     }

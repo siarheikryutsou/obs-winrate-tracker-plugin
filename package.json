@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w & http-server . -p 3847 -o",
+    "serve": "http-server . -p 3847 -o"
+  },
   "devDependencies": {
-    "@types/wicg-file-system-access": "^2020.9.6"
+    "@types/wicg-file-system-access": "^2020.9.6",
+    "http-server": "^14.1.1"
   }
 }

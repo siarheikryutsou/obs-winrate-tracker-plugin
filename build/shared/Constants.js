@@ -1,0 +1,10 @@
+export const TEXT_WIN = "Win";
+export const TEXT_LOSS = "Loss";
+export const TEXT_WIN_RATE = "WinRate";
+export const TEXT_WIN_SHORT = "W";
+export const TEXT_LOSS_SHORT = "L";
+export const TEXT_WIN_RATE_SHORT = "WR";
+export const TEXT_LAST_RECORD = "Last Record:";
+export const TEXT_SAVE = "Save";
+export const TEXT_RESET = "Reset All Records";
+//# sourceMappingURL=Constants.js.map
