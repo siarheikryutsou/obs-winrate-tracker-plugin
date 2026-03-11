@@ -172,6 +172,15 @@ button.small.icon img {
     margin-top: var(--margin-row-v);
 }
 
+.kofi-wrapper {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.kofi-badge {
+    height: 56px;
+}
+
 #footer {
     margin-top: var(--margin-row-v);
     position: sticky;

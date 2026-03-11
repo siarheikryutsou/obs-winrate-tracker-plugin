@@ -46,7 +46,12 @@ export class PageSettings extends Page {
                     <label for="fontColor">Font Color</label>
                     <input type="color" id="fontColor" value="${this.config.getFontColor()}">
                 </div>
-            </fieldset>`.trim();
+            </fieldset>
+            <div class="kofi-wrapper">
+                <a href="https://ko-fi.com/R6R71VSV1A" target="_blank" rel="noopener noreferrer" class="kofi-link">
+                    <img src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_badge_dark.png" alt="Support me on Ko-fi" class="kofi-badge">
+                </a>
+            </div>`.trim();
     }
     connectedCallback() {
         super.connectedCallback();
